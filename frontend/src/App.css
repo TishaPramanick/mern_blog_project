@@ -1,0 +1,68 @@
+:root{
+    --bg-color : rgb(243 244 246/1);
+}
+.password{
+    border : 0px solid rgb(194, 194, 194);
+    
+}
+.password:focus-within{
+    border : 0px solid rgb(194, 194, 194);
+    
+}
+.pwd-box{
+    border : none;
+    border-radius: 8px;
+    background-color: white;
+}
+.password button{
+    background-color: var(--bg-color) ;
+    border-radius: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 0;
+}
+.password button:hover{
+    background-color:var(--bg-color) ;
+    border-radius: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 0;
+}
+.pwd-box:focus{
+    border : none;
+    outline: none;
+}
+
+[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+    outline: none;
+    outline-offset: 0px !important;
+    --tw-ring-inset: var(--tw-empty) !important;
+    --tw-ring-offset-width: 0px !important;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: white !important;
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    border-color: white !important;
+}
+
+[type='text'], [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color:  var(--bg-color) !important;
+    border-color: #6B7280;
+    border-width: 0px !important;
+    border-radius: 0px;
+    padding-top: 0.5rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    --tw-shadow: 0 0 #0000;
+}
+
+/* rgb(249 250 251 / var(--tw-bg-opacity)); */
+
+
