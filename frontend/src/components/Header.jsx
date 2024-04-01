@@ -3,13 +3,14 @@ import {Link , useLocation} from "react-router-dom"
 import {Button, Navbar, TextInput} from "flowbite-react";
 import { FiSearch  } from "react-icons/fi";
 import {FaMoon} from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
 export default function Header() {
     const path = useLocation().pathname;
   return (
-    <Navbar className='border-b-2 py-4'>
-        <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'>
+    <Navbar className='border-b-2 '>
+        <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white'>
             <span className='px-2 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-            rounded-lg text-white'>Coder's</span>
+            rounded-lg text-white mr-1'>Coder's</span>
             Space
         </Link>
         <form action="">
@@ -32,7 +33,7 @@ export default function Header() {
                      Sign In
                 </Button>
             </Link>
-            <Navbar.Toggle></Navbar.Toggle>
+            <Navbar.Toggle className='border-0'><RxHamburgerMenu></RxHamburgerMenu></Navbar.Toggle>
         </div>
         <Navbar.Collapse>
             <Navbar.Link active={path === '/'} href='/'>
