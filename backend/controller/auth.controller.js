@@ -1,6 +1,7 @@
 const User = require("../model/user.model");
 const bcrypt = require("bcrypt");
-const { error } = require("../utils/errorHandler");
+const { error, errorHandler } = require("../utils/errorHandler");
+const createToken = require("../config/jwtToken");
 const signup = async(req , res , next)=>{
     const {name , email , password} = req.body;
     if(!name || !email || !password || name === "" || email === "" || password === "")
@@ -24,4 +25,31 @@ const signup = async(req , res , next)=>{
 
 }
 
-module.exports = {signup};
+const signin = async(req , res , next)=>{
+    const {email , password} = req.body;
+    if(!email || !password || email === "" || password === "")
+    {
+        return next(error(400 , "All Fields are required"));
+    }
+    try {
+        const findUser = await User.findOne({email : email}).populate("password");
+        if(!findUser) return next(error(404 , "User not found"));
+
+        const comparePassword = bcrypt.compareSync(password , findUser.password);
+        if(!comparePassword) return next(error(400 , "Invalid Credentials"));
+
+        const token = createToken(findUser);
+
+        const {password : pass , ...userData} = findUser._doc;
+
+        res.status(200).cookie("access-token" , token , {
+            httpOnly : true
+        }).json();
+
+        
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {signup , signin};
