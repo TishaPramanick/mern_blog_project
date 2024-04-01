@@ -7,11 +7,11 @@ import { RxHamburgerMenu } from "react-icons/rx";
 export default function Header() {
     const path = useLocation().pathname;
   return (
-    <Navbar className='border-b-2 '>
-        <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white'>
-            <span className='px-2 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-            rounded-lg text-white mr-1'>Coder's</span>
-            Space
+    <Navbar className='border-b-2 py-2'>
+        <Link to="/" className='flex items-end whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white ml-24'>
+            <span className='px-3 py-1 bg-gradient-to-r from-indigo-900 via-purple-500 to-purple-400 
+            rounded-lg text-white mr-1'>Coder'S</span>
+            <span className='uppercase text-2xl font-bold text-blue-950'>Space</span>
         </Link>
         <form action="">
             <TextInput
@@ -28,12 +28,12 @@ export default function Header() {
             <Button className='w-12 h-10 hidden sm:inline' color="gray">
                 <FaMoon></FaMoon>
             </Button>
-            <Link to="/sign-in">
+            <Link to="/sign-in" className='mr-24'>
                 <Button gradientDuoTone="purpleToBlue">
                      Sign In
                 </Button>
             </Link>
-            <Navbar.Toggle className='border-0'><RxHamburgerMenu></RxHamburgerMenu></Navbar.Toggle>
+            <Navbar.Toggle className='border-0'></Navbar.Toggle>
         </div>
         <Navbar.Collapse>
             <Navbar.Link active={path === '/'} href='/'>
