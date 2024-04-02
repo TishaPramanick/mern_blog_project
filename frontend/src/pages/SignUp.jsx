@@ -4,7 +4,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { IoEyeOff } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -14,11 +14,7 @@ export default function SignUp() {
   let emailInput = React.useRef("");
   let nameInput = React.useRef("");
   const navigate  = useNavigate();
-  let userObj = {
-    name  : "",
-    email : "",
-    password : ""
-   }
+
   function handleShowPassword() {
       (showPassword) ? setShowPassword(false) : setShowPassword(true);
   }
@@ -27,33 +23,26 @@ export default function SignUp() {
   {
     e.preventDefault();
 
-    userObj = {...userObj , name : nameInput.current.value , email : emailInput.current.value , password : passwordInput.current.value};
-    
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch("/api/auth/sign-up" , {
-        method : "POST",
-        headers : {'Content-type': 'application/json'},
-        body : JSON.stringify(userObj)
-      });
-
-      const data = await res.json();
-      if(data.status === false)
-      {
-        setLoading(false);
-        return setErrorMessage(data.message);
-      }
-      
+      const res = await axios.post("/api/auth/sign-up" , {
+        name : nameInput.current.value ,
+        email : emailInput.current.value ,
+        password : passwordInput.current.value
+      }).catch (err =>  setErrorMessage(err.response.data.message));
+  
+      const data = await res.data;
       setLoading(false);
+      setErrorMessage(null);
       navigate("/sign-in");
-
+      
     } catch (error) {
-      setErrorMessage(error.message);
-      setErrorMessage(false);
+      setLoading(false);
+      setErrorMessage(error.response.data.message);
     }
 
-    console.log(JSON.stringify(userObj));
+
   }
   return (
     <div className='min-h-fit my-20'>

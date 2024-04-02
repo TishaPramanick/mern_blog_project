@@ -4,55 +4,43 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { IoEyeOff } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useDispatch , useSelector } from 'react-redux';
+import { signInFailure, signInStart , signInSuccess } from '../redux/user/userSlice';
 
 
 export default function SignIn() {
+  const dispatcher = useDispatch();
+  const {loading , error:errorMessage} = useSelector((state)=>state.user);
   const [showPassword, setShowPassword] = React.useState(false);
-  const [errorMessage , setErrorMessage] = React.useState(null);
-  const [loading , setLoading] = React.useState(null);
+
   let passwordInput = React.useRef("");
   let emailInput = React.useRef("");
   let nameInput = React.useRef("");
   const navigate  = useNavigate();
-  let userObj = {
-    email : "",
-    password : ""
-   }
+  
   function handleShowPassword() {
       (showPassword) ? setShowPassword(false) : setShowPassword(true);
   }
 
   async function handleSubmit(e)
   {
-    e.preventDefault();
-
-    userObj = {...userObj , email : emailInput.current.value , password : passwordInput.current.value};
-    
+    e.preventDefault(); 
     try {
-      setLoading(true);
-      setErrorMessage(null);
-      const res = await fetch("/api/auth/sign-in" , {
-        method : "POST",
-        headers : {'Content-type': 'application/json'},
-        body : JSON.stringify(userObj)
-      });
+      dispatcher(signInStart);
+      const res = await axios.post("/api/auth/sign-in" , {
+         email : emailInput.current.value ,
+          password : passwordInput.current.value
+      })
+  
+      const data = await res.data;
 
-      const data = await res.json();
-      if(data.status === false)
-      {
-        setLoading(false);
-        return setErrorMessage(data.message);
-      }
-      
-      setLoading(false);
-      navigate("/");
+      dispatcher(signInSuccess(data));
 
+      navigate("/")
     } catch (error) {
-      setErrorMessage(error.message);
-      setErrorMessage(false);
+      dispatcher(signInFailure(error.response.data.message));
     }
-
-    console.log(JSON.stringify(userObj));
   }
   return (
     <div className='min-h-fit my-20'>
