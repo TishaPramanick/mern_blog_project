@@ -68,6 +68,55 @@ const signin = async(req , res , next)=>{
 }
 
 
+// google auth
+
+const google = async (req , res , next)=>{
+    const {name , email , googlePhotoUrl} = req.body;
+    try{
+        const user = await User.findOne({email : email});
+
+        if(user)
+        {
+            const token = createToken(user._id);
+            const {password , ...userData} = user._doc;
+            res.cookie(String(user._id) , token , {
+                path : '/',
+                expires : new Date(Date.now()  + 1000 * 35 ),
+                httpOnly : true,
+                sameSite : "lax"
+            });
+
+            res.status(200).json({status : true , userData});
+        }
+        else{
+            // create user
+            const generateRandomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+
+            const hashedPassword = bcrypt.hashSync(generateRandomPassword , 10);
+            const newUser = new User({
+                name : name.toLowerCase().split(" ").join('') + Math.random().toString(9).slice(-4),
+                email : email,
+                password : hashedPassword,
+                profilePhoto : googlePhotoUrl
+            });
+
+            await newUser.save();
+            const token = createToken(newUser._id);
+            const {password , ...newUserData} = newUser._doc;
+            res.cookie(String(newUser._id) , token , {
+                path : '/',
+                expires : new Date(Date.now()  + 1000 * 35 ),
+                httpOnly : true,
+                sameSite : "lax"
+            });
+
+            res.status(200).json({status : true , newUserData});
+        }
+    }catch(error){
+        next(error);
+    }
+}
+
 const getUser = async(req , res, next)=>{
 
     const userId = req?.id;
@@ -76,7 +125,6 @@ const getUser = async(req , res, next)=>{
         const findUser = await User.findById(userId , "-password");
         if(!findUser) return res.next(error(404 , "Please login first"));
 
-        console.log(req.headers.cookie);
         res.status(200).json({findUser});
     } catch (error) {
         next(error)
@@ -111,4 +159,4 @@ const refreshToken = (req , res , next) => {
 
    })
 }
-module.exports = {signup , signin , getUser , refreshToken};
+module.exports = {signup , signin , getUser , refreshToken , google};
