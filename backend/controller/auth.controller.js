@@ -44,7 +44,7 @@ const signin = async(req , res , next)=>{
 
         res.status(200).cookie("access-token" , token , {
             httpOnly : true
-        }).json();
+        }).json({status : true , userData});
 
         
     } catch (error) {
