@@ -35,8 +35,7 @@ export default function SignIn() {
       })
   
       const data = await res.data;
-
-      dispatcher(signInSuccess(data));
+      dispatcher(signInSuccess(data.userData));
 
       navigate("/")
     } catch (error) {
@@ -51,7 +50,7 @@ export default function SignIn() {
           <Link to="/" className='flex items-end whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white'>
             <span className='px-4 pb-1 pr-1 py-2 bg-gradient-to-br from-purple-950 to-cyan-400 
                 rounded-lg text-white mr-0 text-4xl'>Coder'S</span>
-            <span className='uppercase text-4xl font-bold text-blue-950'>pace</span>
+            <span className='uppercase text-4xl font-bold text-blue-950 dark:text-white'>pace</span>
           </Link>
           <p className='right text-sm mt-5'>
             Expore the world of Coders with us. #Learn Yourself with us.
@@ -76,7 +75,7 @@ export default function SignIn() {
               <Label value='Your Password' htmlFor='password'></Label>
               <div className='flex justify-between rounded-lg password'>
                 <input
-                  className='pwd-box rounded-tl-lg rounded-bl-lg w-full text-sm bg-gray-50'
+                  className='pwd-box rounded-tl-lg rounded-bl-lg dark:rounded-tl-lg dark:rounded-bl-lg dark:rounded-br-none dark:rounded-tr-none w-full text-sm dark:bg-gray-700 bg-gray-50 dark:text-white'
                   type={(!showPassword) ? "password" : "text"}
                   placeholder='Enter Your Password'
                   id='password'
@@ -84,7 +83,7 @@ export default function SignIn() {
                   ref={passwordInput}
 
                 />
-                <Button className='enabled:hover:bg-gray-100 focus:ring-0 bg-gray-50' onClick={handleShowPassword}>{(!showPassword) ? <IoEye className='text-black text-xl'></IoEye> : <IoEyeOff className='text-black text-xl'></IoEyeOff>}</Button>
+                <Button className='enabled:hover:bg-gray-100 focus:ring-0 bg-gray-50 dark:enabled:hover:bg-gray-700 dark:focus:ring-0 dark:bg-gray-700' onClick={handleShowPassword}>{(!showPassword) ? <IoEye className='text-black text-xl dark:text-white'></IoEye> : <IoEyeOff className='text-black dark:text-white text-xl'></IoEyeOff>}</Button>
               </div>
             </div>
             <Button gradientDuoTone="purpleToBlue" type='submit' onClick={handleSubmit} disabled={loading}>
@@ -100,7 +99,7 @@ export default function SignIn() {
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Don't have an account ?</span>
-            <Link to="/sign-up" className='text-blue-950 font-bold'>
+            <Link to="/sign-up" className='text-blue-950 font-bold  dark:text-gray-400'>
               Sign Up
             </Link>
           </div>

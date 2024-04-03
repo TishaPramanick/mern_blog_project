@@ -16,7 +16,7 @@ export default function FooterComp() {
                         <Link to="/" className='flex items-end whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white ml:0 xl:ml-24'>
                             <span className='px-2.5 pb-0.5 pr-0.5 py-1 bg-gradient-to-br from-purple-950 to-cyan-400 
                 rounded-md text-white mr-0 text-xl'>Coder'S</span>
-                            <span className='uppercase text-xl font-bold text-blue-950'>pace</span>
+                            <span className='uppercase text-xl font-bold text-blue-950 dark:text-white'>pace</span>
                         </Link>
                     </div>
                     <div className='grid grid-cols-3 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-8'>
