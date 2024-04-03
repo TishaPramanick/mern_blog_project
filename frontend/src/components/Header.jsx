@@ -31,7 +31,7 @@ export default function Header() {
             <FiSearch></FiSearch>
         </Button>
         <div className='flex gap-2 md:order-2'>
-            <Button className='w-12 h-10 hidden sm:inline enabled:hover:bg-gray-100 focus:ring-0 bg-gray-50 dark:enabled:hover:bg-transparent dark:focus:ring-0 dark:bg-gray-700 dark:text-white ' color="gray" onClick={()=>{dispatcher(toggleTheme())}}>
+            <Button className='w-12 h-10 sm:inline enabled:hover:bg-gray-100 focus:ring-0 bg-gray-50 dark:enabled:hover:bg-transparent dark:focus:ring-0 dark:bg-gray-700 dark:text-white ' color="gray" onClick={()=>{dispatcher(toggleTheme())}}>
                 {(theme === "light") ? <FaMoon></FaMoon> : <FaSun></FaSun>}
             </Button>
             {

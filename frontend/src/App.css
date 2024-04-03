@@ -107,6 +107,17 @@
     --tw-shadow: 0 0 #0000;
 }
 
+
+.side div{
+    border: none;
+    border-radius: 0 !important;
+    
+}
+.dark .side div{
+    background-color: rgb(20, 30, 44) !important;
+}
+
+/* rgb(31 41 55) */
 /* rgb(249 250 251 / var(--tw-bg-opacity)); */
 
 

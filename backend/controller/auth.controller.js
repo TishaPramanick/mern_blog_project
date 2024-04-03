@@ -52,7 +52,7 @@ const signin = async(req , res , next)=>{
 
         res.cookie(findUser._id , token , {
             path : '/',
-            expires : new Date(Date.now()  + 1000 * 35 ),
+            expires : new Date(Date.now()  + 1000 * 60 * 60 * 24),
             httpOnly : true,
             sameSite : "lax"
         })
@@ -81,7 +81,7 @@ const google = async (req , res , next)=>{
             const {password , ...userData} = user._doc;
             res.cookie(String(user._id) , token , {
                 path : '/',
-                expires : new Date(Date.now()  + 1000 * 35 ),
+                expires : new Date(Date.now()  + 1000 * 60 * 60 * 24),
                 httpOnly : true,
                 sameSite : "lax"
             });
@@ -105,7 +105,7 @@ const google = async (req , res , next)=>{
             const {password , ...newUserData} = newUser._doc;
             res.cookie(String(newUser._id) , token , {
                 path : '/',
-                expires : new Date(Date.now()  + 1000 * 35 ),
+                expires : new Date(Date.now()  + 1000 * 60 * 60 * 24),
                 httpOnly : true,
                 sameSite : "lax"
             });
@@ -117,19 +117,7 @@ const google = async (req , res , next)=>{
     }
 }
 
-const getUser = async(req , res, next)=>{
 
-    const userId = req?.id;
-
-    try {
-        const findUser = await User.findById(userId , "-password");
-        if(!findUser) return res.next(error(404 , "Please login first"));
-
-        res.status(200).json({findUser});
-    } catch (error) {
-        next(error)
-    }
-}
 
 const refreshToken = (req , res , next) => {
    const cookie = req.headers.cookie;
@@ -159,4 +147,4 @@ const refreshToken = (req , res , next) => {
 
    })
 }
-module.exports = {signup , signin , getUser , refreshToken , google};
+module.exports = {signup , signin , refreshToken , google};

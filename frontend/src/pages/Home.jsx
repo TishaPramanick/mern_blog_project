@@ -1,47 +1,53 @@
 import React, { useEffect } from 'react'
-// import axios from 'axios';
-// axios.defaults.withCredentials = true;
-// let firstRender = true;
+import { Navigate } from 'react-router';
+import axios from 'axios';
+import { signInSuccess } from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
+axios.defaults.withCredentials = true;
+let firstRender = true;
 
 export default function Home() {
 
-  // const refreshToken = async()=>{
-  //   const res = await axios.get("http://localhost:4000/api/auth/refresh" , {
-  //     withCredentials : true
-  //   }).catch(err => console.log(err));
+  const dispatcher = useDispatch();
+  const refreshToken = async()=>{
+    const res = await axios.get("/api/auth/refresh" , {
+      withCredentials : true
+    }).catch(err => console.log(err));
 
-  //   const data = await res.data;
-  //     console.log(data); 
-  //   return data;
-  // }
+    const data = await res.data;
+      console.log(data); 
+    return data;
+  }
 
-  // const sendRequest = async()=>{
-  //   try {
-  //     const res = await axios.get("http://localhost:4000/api/auth/user" , {
-  //       withCredentials : true
-  //     }).catch(err => console.log(err));
+  const sendRequest = async()=>{
+    try {
+      const res = await axios.get("/api/user" , {
+        withCredentials : true
+      }).catch(err => console.log(err));
 
-  //     const data = await res.data;
-  //     console.log(data);
-  //     return data;
+      const data = await res.data;
+      dispatcher(signInSuccess(data));
+      return data;
 
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // useEffect(()=>{
-  //   if(firstRender)
-  //   {
-  //     firstRender = false
-  //     sendRequest().then((data) => console.log(data));
-  //   }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    console.log(firstRender);
+    if(firstRender)
+    {
+      
+      firstRender = false
+      sendRequest();
+    }
 
-  //   let interval = setInterval(()=>{
-  //     refreshToken().then((data) => console.log(data));
-  //   } ,24 * 60 * 60 * 1000);
+    let interval = setInterval(()=>{
+      refreshToken().then((data) => console.log(data));
+    } ,24 * 60 * 60 * 1000);
 
-  //   return ()=>clearInterval(interval);
-  // } , []);
+    return ()=>clearInterval(interval);
+  } , []);
 
 
   return (

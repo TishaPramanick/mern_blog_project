@@ -8,6 +8,7 @@ import Projects from "./pages/Projects";
 import './App.css'
 import Header from "./components/Header";
 import FooterComp from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
 
@@ -19,7 +20,9 @@ function App() {
         <Route path="/about" element={<About/>}></Route>
         <Route path="/sign-in" element={<SignIn/>}></Route>
         <Route path="/sign-up" element={<SignUp/>}></Route>
-        <Route path="/dashboard" element={<Dashboard/>}></Route>
+        <Route element={<PrivateRoute/>}>
+            <Route path="/dashboard" element={<Dashboard/>}></Route>
+        </Route>
         <Route path="/projects" element={<Projects/>}></Route>
       </Routes>
       <FooterComp></FooterComp>

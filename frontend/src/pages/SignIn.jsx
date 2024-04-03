@@ -28,18 +28,18 @@ export default function SignIn() {
   {
     e.preventDefault(); 
     try {
-      dispatcher(signInStart);
+      dispatcher(signInStart());
       const res = await axios.post("/api/auth/sign-in" , {
          email : emailInput.current.value ,
           password : passwordInput.current.value
-      })
+    }).catch((err)=> dispatcher(signInFailure(err.response.data.message)))
   
       const data = await res.data;
       dispatcher(signInSuccess(data.userData));
 
       navigate("/")
     } catch (error) {
-      dispatcher(signInFailure(error.response.data.message));
+      dispatcher(signInFailure("something went wrong"));
     }
   }
   return (
