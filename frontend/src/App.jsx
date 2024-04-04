@@ -9,19 +9,31 @@ import './App.css'
 import Header from "./components/Header";
 import FooterComp from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import { useState } from "react";
+import OnlyAdmin from "./components/OnlyAdminPrivateRoute";
+import CreatePost from "./pages/CreatePost";
 
 function App() {
+  const [user , setUser] = useState(false);
+  function getUserStatus(user)
+  {  
+      setUser(user);
+      console.log(user);
+  }
 
   return (
     <BrowserRouter>
     <Header></Header>
       <Routes>
-        <Route path="/" element={<Home/>}></Route>
+        <Route path="/" element={<Home user={getUserStatus}></Home>}></Route>
         <Route path="/about" element={<About/>}></Route>
         <Route path="/sign-in" element={<SignIn/>}></Route>
         <Route path="/sign-up" element={<SignUp/>}></Route>
-        <Route element={<PrivateRoute/>}>
+        <Route element={<PrivateRoute userInfo = {user}></PrivateRoute>}>
             <Route path="/dashboard" element={<Dashboard/>}></Route>
+        </Route>
+        <Route element={<OnlyAdmin></OnlyAdmin>}>
+          <Route path="/create-post" element={<CreatePost/>}></Route>
         </Route>
         <Route path="/projects" element={<Projects/>}></Route>
       </Routes>
