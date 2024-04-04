@@ -36,10 +36,12 @@ export default function SignIn() {
   
       const data = await res.data;
       dispatcher(signInSuccess(data.userData));
+      localStorage.setItem("loginStatus" , true);
 
+      (data.userData.isAdmin) ? localStorage.setItem("isAdmin" , true) : null; 
       navigate("/")
     } catch (error) {
-      dispatcher(signInFailure("something went wrong"));
+      dispatcher(signInFailure(error.response.data.message));
     }
   }
   return (

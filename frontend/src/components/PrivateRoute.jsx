@@ -4,24 +4,24 @@ import { Navigate, Outlet } from 'react-router';
 import { getUser } from '../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
 
-export default function PrivateRoute() {
-  let show = false;
+
+
+export default function PrivateRoute({userInfo}) {
   const dispatcher = useDispatch();
-  const user = useSelector(state => state.user);
-  const [currUser , setCurrUser] = useState(user);
-
-
+  const {currentUser} = useSelector(state=>state.user);
+  const [currUser , setCurrUser] = useState(false);
   useEffect(()=>{
       dispatcher(getUser());
-
   } , [dispatcher])
 
+
   useEffect(()=>{
-    setCurrUser(user);
-    console.log(user)
-  } , [])
+    setCurrUser(currentUser);
+  
+  } , [currentUser])
+
 
   return (
-     (currUser) ? <Outlet/> : <Navigate to={"/sign-in"}></Navigate>
+     (localStorage.getItem("loginStatus")) ? <Outlet/> : <Navigate to={"/sign-in"}></Navigate>
   )
 }

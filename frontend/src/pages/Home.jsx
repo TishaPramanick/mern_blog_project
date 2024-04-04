@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 axios.defaults.withCredentials = true;
 let firstRender = true;
 
-export default function Home() {
+export default function Home({user}) {
 
   const dispatcher = useDispatch();
   const refreshToken = async()=>{
@@ -27,6 +27,7 @@ export default function Home() {
 
       const data = await res.data;
       dispatcher(signInSuccess(data));
+      user(data);
       return data;
 
     } catch (error) {

@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = async(req , res , next)=>{
+
     const cookies = req.headers.cookie;
     const token = cookies?.split("=")[1];
 
-    if(!token)
+     if(!token)
     {
         return res.status(404).json({msg : "No token found"});
     }

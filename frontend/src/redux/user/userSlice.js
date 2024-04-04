@@ -25,7 +25,34 @@ const userSlice = createSlice({
         signInFailure : (state , action)=>{
             state.loading = false;
             state.error = action.payload;
-        }
+        },
+        deleteUserStart : (state , action) => {
+            state.loading = true;
+            state.error = null;
+        },
+        deleteUserSuccess : (state , action)=>{
+            state.currentUser = null;
+            state.loading = false;
+            state.error = null;
+        },
+        deleteUserFailure : (state , action)=>{
+            state.loading = false;
+            state.error = action.payload;
+        },
+        signOutStart : (state , action) => {
+            state.loading = true;
+            state.error = null;
+        },
+        signOutSuccess : (state , action)=>{
+            state.currentUser = null;
+            state.loading = false;
+            state.error = null;
+        },
+        signOutFailure : (state , action)=>{
+            state.loading = false;
+            state.error = action.payload;
+        },
+
     },
     extraReducers : (builder) => {
         builder.addCase(getUser.fulfilled , (state , action)=>{
@@ -42,20 +69,29 @@ const userSlice = createSlice({
         builder.addCase(getUser.rejected , (state,action)=>{
             state.loading = false;
             state.error = action.payload;
+            state.currentUser = false;
         })
     }
 });
 
-export const {signInStart , signInSuccess , signInFailure} = userSlice.actions;
+export const {
+    signInStart , signInSuccess , signInFailure ,
+    deleteUserFailure , deleteUserSuccess,deleteUserStart,
+    signOutFailure , signOutStart , signOutSuccess ,
+ } = userSlice.actions;
 
 export const getUser = createAsyncThunk('getUser' , async()=>{
-    const res = await axios.get('/api/user' , {
-        withCredentials : true
-    }).catch(err => {return "error"});
-
-    const data = await res.data;
-    console.log(data);
-    return data;
+    try {
+        const res = await axios.get('/api/user' , {
+            withCredentials : true
+        }).catch(err =>{ return err.response.data.message});
+    
+        const data = await res.data;
+        console.log(data);
+        return data;
+    } catch (error) {
+        return error.response.data.message;
+    }
 });
 
 export default userSlice.reducer;

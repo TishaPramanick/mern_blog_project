@@ -5,13 +5,35 @@ import { FiSearch  } from "react-icons/fi";
 import {FaMoon , FaSun} from "react-icons/fa";
 import { useSelector , useDispatch } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
-
+import axios from "axios";
+import {signOutFailure , signOutSuccess} from '../redux/user/userSlice';
+import { useNavigate } from 'react-router';
 
 export default function Header() {
     const dispatcher = useDispatch();
+    const navigate = useNavigate();
     const path = useLocation().pathname;
     const {currentUser} = useSelector((state)=>state.user);
     const {theme} = useSelector((state)=>state.theme);
+
+
+    
+    const handleLogout = async()=>{
+        try {
+          const res = await axios.get("/api/user/logout").catch(err => dispatcher(signOutFailure(err.response.data.message)));
+  
+          const data = await res.data;
+  
+          if(data.status)
+          {
+            dispatcher(signOutSuccess());
+            localStorage.clear();
+            navigate("/");
+          }
+        } catch (error) {
+          dispatcher(signOutFailure(error.response.data.message))
+        }
+    }
   return (
     <Navbar className='border-b-2'>
         <Link to="/" className='flex items-end whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white ml:0 xl:ml-24'>
@@ -35,7 +57,7 @@ export default function Header() {
                 {(theme === "light") ? <FaMoon></FaMoon> : <FaSun></FaSun>}
             </Button>
             {
-                currentUser ? (
+                (currentUser && localStorage.getItem("loginStatus")) ? (
                 <>
                     <Dropdown
                         arrowIcon={false}
@@ -56,7 +78,7 @@ export default function Header() {
                             <Dropdown.Item>Profile</Dropdown.Item>
                         </Link>
                         <Dropdown.Divider></Dropdown.Divider>
-                        <Dropdown.Item>Sign Out</Dropdown.Item>
+                        <Dropdown.Item onClick={handleLogout} as="button">Sign Out</Dropdown.Item>
 
                     </Dropdown>
                 </>) : (
