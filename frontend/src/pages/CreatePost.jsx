@@ -1,15 +1,51 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {TextInput , Select, FileInput, Button, Alert} from "flowbite-react"
+import axios from "axios"
+import {useNavigate} from "react-router"
 import {getDownloadURL, getStorage , ref, uploadBytesResumable} from "firebase/storage";
 import {app} from "../firebase"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export default function CreatePost() {
+  const navigate = useNavigate();
   const [file , setFile] = useState(null);
   const [uploadProgress , setuploadProgress] = useState(null);
   const [uploadError , setuploadError] = useState(null);
+  const [publishError , setPublishError] = useState(null);
   const [formData , setFormData] = useState({});
+
+  const titleInput = useRef(null);
+  const categoryInput = useRef(null);
+  const quillInput = useRef(null);
+
+  const handlePublish = async(e)=>{
+      e.preventDefault();
+
+      console.log(titleInput.current.value);
+
+      console.log("select : " , categoryInput.current.value);
+
+      console.log("quill : ", quillInput.current.value);
+
+
+      try {
+        const res = await axios.post("/api/post" , {
+          ...formData,
+          title : titleInput.current.value , 
+          category : categoryInput.current.value , 
+          content : quillInput.current.value
+        }).catch(err =>{ console.log(err); setPublishError(err.response.data.message)});
+
+        const data = await res.data;
+        console.log(data);
+        setPublishError(null);
+        navigate(`/post?${data.slug}`);
+      } catch (error) {
+        console.log(error);
+        setPublishError("Something Went Wrong");
+      }
+  }
 
   const handleUploadImage = async() => {
     try {
@@ -53,9 +89,9 @@ export default function CreatePost() {
       <h1 className='text-center text-3xl my-7 font-semibold'></h1>
       <form className='flex flex-col gap-4'>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
-          <TextInput type='text' placeholder='Title' required id='title' className='flex-1'></TextInput>
-          <Select>
-            <option value="uncategorized">Select Category</option>
+          <TextInput type='text' placeholder='Title' required id='title' className='flex-1' ref={titleInput}></TextInput>
+          <Select ref={categoryInput}>
+            <option value="uncategorized" >Select Category</option>
             <option value="javascript">Javascript</option>
             <option value="reactjs">React js</option>
             <option value="nextjs">Next js</option>
@@ -71,8 +107,12 @@ export default function CreatePost() {
         {
           (formData.image) && <img src={formData.image} alt='image..' className='w-full h-72 object-cover'></img>
         }
-        <ReactQuill theme='snow' placeholder='Write Post' className='h-72 mb-12' required/>
-        <Button type='submit' gradientDuoTone="purpleToBlue">Publish</Button>
+        <ReactQuill theme='snow' placeholder='Write Post' className='h-72 mb-12' required ref={quillInput}/>
+        <Button type='submit' gradientDuoTone="purpleToBlue" onClick={handlePublish}>Publish</Button>
+
+        {
+          (publishError) && <Alert color="failure">{publishError}</Alert>
+        }
       </form>
     </div>
   )

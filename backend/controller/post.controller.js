@@ -9,6 +9,8 @@ const createPost = async(req , res , next)=>{
     const userId = req.id;
     const {title , content} = req.body;
 
+    console.log(title , content);
+
     if(!title || !content) return next(error(400 , "Please Provide all required fields"));
 
     const slug = title.split(" ").join("-").toLowerCase().replace(/[^a-z0-9]/g , '-');
