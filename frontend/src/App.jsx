@@ -12,6 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { useState } from "react";
 import OnlyAdmin from "./components/OnlyAdminPrivateRoute";
 import CreatePost from "./pages/CreatePost";
+import UpdatePost from "./pages/UpdatePost";
 
 function App() {
   const [user , setUser] = useState(false);
@@ -34,6 +35,7 @@ function App() {
         </Route>
         <Route element={<OnlyAdmin></OnlyAdmin>}>
           <Route path="/create-post" element={<CreatePost/>}></Route>
+          <Route path="/update-post/:postId" element={<UpdatePost/>}></Route>
         </Route>
         <Route path="/projects" element={<Projects/>}></Route>
       </Routes>

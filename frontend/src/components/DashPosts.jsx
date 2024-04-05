@@ -1,13 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import {Button, Table, TableRow} from "flowbite-react"
+import { BsExclamationCircle } from "react-icons/bs";
+import {Button, Table, TableRow , Modal} from "flowbite-react"
 import {Link} from "react-router-dom"
 
 export default function DashPosts() {
     const {currentUser} = useSelector(state => state.user);
     const [userPosts , setUserPosts] = useState({});
     const [showMore , setShowMore] = useState(true);
+    const [showModel , setShowModel] = useState(false);
+    const [postIdToDelete , setPostIdToDelete] = useState('');
     console.log(userPosts);
 
     const fetchPosts = async()=>{
@@ -44,13 +47,27 @@ export default function DashPosts() {
         const data = await res.data;
 
         setUserPosts((prev) => [...prev , ...data.posts]);
-        if(data.posts.length < 9)
+        if(data.posts.length <= 9)
         {
           setShowMore(false);
         }
       } catch (error) {
         console.log(error)
       }
+    }
+
+    const handleDeletePost = async()=>{
+        setShowModel(false);
+        try {
+          const res = await axios.delete(`/api/post/delete/${postIdToDelete}/${currentUser._id}`).catch(err => console.log(err));
+
+          const data = await res.data;
+          setUserPosts((prev) => prev.filter((p)=> p._id !== postIdToDelete));
+          console.log(data);
+
+        } catch (error) {
+          console.log(error);
+        }
     }
   return (
     <div className='table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-300'>
@@ -82,7 +99,7 @@ export default function DashPosts() {
                   </Table.Cell>
                   <Table.Cell>{p.category}</Table.Cell>
                   <Table.Cell>
-                    <span className='text-red-600 cursor-pointer font-medium'>Delete</span>
+                    <span className='text-red-600 cursor-pointer font-medium' onClick={()=>{setShowModel(true); setPostIdToDelete(p._id)}}>Delete</span>
                   </Table.Cell>
                   <Table.Cell>
                     <Link to={`/update-post/${p._id}`}>
@@ -99,6 +116,20 @@ export default function DashPosts() {
             onClick={handleShowMore}>Show More</Button>
            }
       </> : <><p>You have no posts yet!!</p></>}
+
+      <Modal show={showModel} onClose={()=>setShowModel(false)} popup size="md">
+        <Modal.Header/>
+        <Modal.Body>
+          <div className="text-center">
+            <BsExclamationCircle className='h-10 w-10 text-gray-400 dark:text-gray-200 mb-4 mx-auto' ></BsExclamationCircle>
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are you sure you want to delete this post?</h3>
+            <div className='flex justify-center gap-6'>
+            <Button color="failure" onClick={handleDeletePost}>Yes , I'm sure</Button>          
+            <Button className='bg-gray-700 ' onClick={()=>setShowModel(false)}>No, cancel</Button> 
+            </div>         
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   )
 }
