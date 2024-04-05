@@ -123,4 +123,28 @@
 .ql-editor{
     font-size: 1.05rem;
 }
+.show-more-btn{
+    border : none !important;
+    border: 0px !important;
+    outline: 0px !important;
+}
+.show-more-btn:hover{
+    background-color: transparent !important;
+}
 
+.show-more-btn:focus{
+    border: 0px !important;
+    outline: 0px !important;
+}
+.dark .show-more-btn{
+    background-color: transparent !important;
+}
+
+.dark .show-more-btn:hover{
+    background-color: transparent !important;
+}
+
+.dark .show-more-btn:focus{
+    border: 0px !important;
+    outline: 0px !important;
+}
