@@ -40,6 +40,7 @@ const signin = async(req , res , next)=>{
         return next(error(400 , "All Fields are required"));
     }
     try {
+
         const findUser = await User.findOne({email : email});
         if(!findUser) return next(error(404 , "User not found"));
 

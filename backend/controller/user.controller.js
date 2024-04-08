@@ -179,4 +179,20 @@ const getUsers = async(req , res, next) => {
         next(error)
     }
 }
-module.exports = {getUser , updateUser , deleteUser , logoutUser , getUsers , adminDeleteUser};
+
+const getSingleUser = async(req , res , next)=>{
+    try {
+        const singleUser = await User.findById(req.params.id);
+
+        if(!singleUser) return next(error("404" , "User not fount"));
+
+        const {password , ...rest} = await singleUser._doc;
+
+        res.status(200).json(rest);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+module.exports = {getUser , updateUser , deleteUser , logoutUser , getUsers , adminDeleteUser , getSingleUser};

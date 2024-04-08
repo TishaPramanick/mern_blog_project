@@ -13,6 +13,8 @@ import { useState } from "react";
 import OnlyAdmin from "./components/OnlyAdminPrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
+import PostPage from "./pages/PostPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [user , setUser] = useState(false);
@@ -24,6 +26,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <ScrollToTop/>
     <Header></Header>
       <Routes>
         <Route path="/" element={<Home user={getUserStatus}></Home>}></Route>
@@ -38,6 +41,7 @@ function App() {
           <Route path="/update-post/:postId" element={<UpdatePost/>}></Route>
         </Route>
         <Route path="/projects" element={<Projects/>}></Route>
+        <Route path="/post/:postSlug" element={<PostPage/>}></Route>
       </Routes>
       <FooterComp></FooterComp>
     </BrowserRouter>

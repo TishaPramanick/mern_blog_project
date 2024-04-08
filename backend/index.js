@@ -7,6 +7,7 @@ const cors = require("cors");
 const authRoute = require("./router/auth.route"); 
 const userRoute = require("./router/user.route");
 const postRoute = require("./router/post.route");
+const commentRoute = require("./router/comment.route");
 const { errorHandler } = require("./utils/errorHandler");
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({extended : false}));
 app.use('/api/auth' , authRoute);
 app.use('/api/user' , userRoute);
 app.use('/api/post' , postRoute);
+app.use('/api/comment' , commentRoute);
 
 app.use(errorHandler);
 

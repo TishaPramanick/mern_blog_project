@@ -26,6 +26,13 @@ export default function DashSidebar({tab}) {
                     </Sidebar.Item>
                 </Link>
                 }
+                {localStorage.getItem("isAdmin") && 
+                <Link to="/dashboard?tab=comments">
+                    <Sidebar.Item active={tab === "comments"} icon={HiOutlineUserGroup} as="div">
+                        Comments
+                    </Sidebar.Item>
+                </Link>
+                }
                 <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer">
                     Sign Out
                 </Sidebar.Item>

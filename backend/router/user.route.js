@@ -1,6 +1,6 @@
 const express = require("express");
 const authMiddleware = require("../middleware/authMiddelWare");
-const {getUser, updateUser , deleteUser, logoutUser , getUsers , adminDeleteUser} = require("../controller/user.controller");
+const {getUser, updateUser , deleteUser, logoutUser , getUsers , adminDeleteUser , getSingleUser} = require("../controller/user.controller");
 
 const router = express.Router();
 
@@ -10,5 +10,6 @@ router.delete('/admin-delete-user/:userIdToDelete' , authMiddleware , adminDelet
 router.delete('/delete' , authMiddleware , deleteUser);
 router.get('/logout' , authMiddleware , logoutUser);
 router.get('/getUsers' , authMiddleware , getUsers);
+router.get('/getSingleUser/:id' , authMiddleware , getSingleUser);
 
 module.exports = router
