@@ -33,7 +33,7 @@ export default function CommentSection({postId}) {
         {
         const encrypt = postId;
         const decrypt =  cryptoJs.AES.decrypt(encrypt , "postId").toString(cryptoJs.enc.Utf8);
-        const pId =  JSON.parse(decrypt);
+         var pId =  JSON.parse(decrypt);
         }
 
         if(comment.length >  200)
