@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 // import CallToAction from '../components/CallToAction';
 import PostCard from '../components/PostCard';
+import About from './About';
 
 axios.defaults.withCredentials = true;
 let firstRender = true;
@@ -98,6 +99,13 @@ export default function Home({user}) {
             </Link>
           </div>
         )}
+      </div>
+      <div id='about' className='flext justify-center py-20 items-center w-full bg-gradient-to-br from-purple-950 to-cyan-800 text-white px-10 sm:px-28 dark:text-white '>
+        <h3 className='font-bold text-4xl pb-5 '>About Us</h3>
+        <div className='pb-5'>Hey🖐️ users!! I am <span className='font-semibold'>Tisha Pramanick</span> the creator of the CoderSpace , this is a blogging site for developers , where they can share their knowledge into the world wide web WWW. <br/>
+                So, I am also an developers and i have created this site for my learning purpose and with the help of this I can take more deep dive into the MERN stack world.
+                <br/> Thanks to <span className='font-bold'>Code With Sahand</span> for this amazing blog site.
+        </div>
       </div>
     </div>
   );

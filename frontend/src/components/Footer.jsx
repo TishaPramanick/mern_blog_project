@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 import { FaHeart } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
+import { IoHeartSharp } from "react-icons/io5";
 import { FaGithub } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import React from 'react'
@@ -10,7 +11,7 @@ import React from 'react'
 export default function FooterComp() {
     return (
         <Footer container className=' rounded-none bg-gray-200'>
-            <div className='w-full max-w-7xl mx-auto py-4'>
+            <div className='w-full max-w-7xl mx-auto pt-4 pb-2'>
                 <div className='grid w-full justify-between sm:flex md:grid-cols-1'>
                     <div className='mt-0 mb-5 '>
                         <Link to="/" className='flex items-end whitespace-nowrap text-sm sm:text-sm font-semibold dark:text-white ml:0 xl:ml-24'>
@@ -76,6 +77,7 @@ export default function FooterComp() {
                 <Footer.Divider/>
                     <div className='w-full sm:flex sm:justify-between sm:items-center'>
                         <Footer.Copyright href='#' by="Coder's Space Team" year={new Date().getFullYear()}></Footer.Copyright>
+                        <div className='flex items-center justify-center text-gray-500'><span className='text-sm font-medium'>Created with </span><IoHeartSharp></IoHeartSharp></div>
                    
                     <div className='flex gap-6 sm:mt-0 mt-4 sm:justify-center'>
                         <Footer.Icon href='#' icon={FaFacebook}></Footer.Icon>

@@ -15,6 +15,7 @@ import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
+import Search from "./pages/Search";
 
 function App() {
   const [user , setUser] = useState(false);
@@ -30,9 +31,9 @@ function App() {
     <Header></Header>
       <Routes>
         <Route path="/" element={<Home user={getUserStatus}></Home>}></Route>
-        <Route path="/about" element={<About/>}></Route>
         <Route path="/sign-in" element={<SignIn/>}></Route>
         <Route path="/sign-up" element={<SignUp/>}></Route>
+        <Route path="/search" element={<Search/>}></Route>
         <Route element={<PrivateRoute userInfo = {user}></PrivateRoute>}>
             <Route path="/dashboard" element={<Dashboard/>}></Route>
         </Route>

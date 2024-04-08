@@ -1,8 +1,9 @@
 import React from 'react'
-import {Sidebar} from "flowbite-react"
+import { Sidebar} from "flowbite-react"
 import {Link} from "react-router-dom"
 import {HiUser , HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiChartPie, HiDocument, HiChat} from "react-icons/hi";
 export default function DashSidebar({tab}) {
+
   return (
     <Sidebar className='side w-full md:w-64'>
         <Sidebar.Items>
@@ -41,9 +42,6 @@ export default function DashSidebar({tab}) {
                     </Sidebar.Item>
                 </Link>
                 }
-                <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer">
-                    Sign Out
-                </Sidebar.Item>
             </Sidebar.ItemGroup>
         </Sidebar.Items>
     </Sidebar>
