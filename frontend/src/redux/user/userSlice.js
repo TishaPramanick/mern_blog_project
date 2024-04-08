@@ -84,7 +84,10 @@ export const getUser = createAsyncThunk('getUser' , async()=>{
     try {
         const res = await axios.get('/api/user' , {
             withCredentials : true
-        }).catch(err =>{ return err.response.data.message});
+        }).catch(err =>{ 
+            localStorage.clear();
+            return err.response.data.message
+        });
     
         const data = await res.data;
         console.log(data);

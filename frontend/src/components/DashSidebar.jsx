@@ -1,7 +1,7 @@
 import React from 'react'
 import {Sidebar} from "flowbite-react"
 import {Link} from "react-router-dom"
-import {HiUser , HiArrowSmRight, HiDocumentText, HiOutlineUserGroup} from "react-icons/hi";
+import {HiUser , HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiChartPie, HiDocument, HiChat} from "react-icons/hi";
 export default function DashSidebar({tab}) {
   return (
     <Sidebar className='side w-full md:w-64'>
@@ -12,6 +12,14 @@ export default function DashSidebar({tab}) {
                         Profile
                     </Sidebar.Item>
                 </Link>
+                {localStorage.getItem("isAdmin") && 
+                <Link to="/dashboard?tab=dash">
+                    <Sidebar.Item active={tab === "dash" || !tab} icon={HiChartPie} as="div">
+                        Dashboard
+                    </Sidebar.Item>
+                </Link>
+                }
+
                 {localStorage.getItem("isAdmin") && 
                 <Link to="/dashboard?tab=posts">
                     <Sidebar.Item active={tab === "posts"} icon={HiDocumentText} as="div">
@@ -28,7 +36,7 @@ export default function DashSidebar({tab}) {
                 }
                 {localStorage.getItem("isAdmin") && 
                 <Link to="/dashboard?tab=comments">
-                    <Sidebar.Item active={tab === "comments"} icon={HiOutlineUserGroup} as="div">
+                    <Sidebar.Item active={tab === "comments"} icon={HiChat} as="div">
                         Comments
                     </Sidebar.Item>
                 </Link>
