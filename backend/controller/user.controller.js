@@ -28,7 +28,6 @@ const updateUser = async(req , res , next)=>{
     const cookie = req.headers.cookie;
 
     const userId = cookie.split("=")[0];
-    console.log(profilePicture);
 
     try {
         if(!profilePicture)

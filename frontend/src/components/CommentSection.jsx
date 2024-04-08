@@ -18,17 +18,23 @@ export default function CommentSection({postId}) {
     const [commentError , setCommentError] = useState(null);
     
     const decryptData = ()=>{
+        if(postId)
+        {
         const encrypt = postId;
         const decrypt = cryptoJs.AES.decrypt(encrypt , "postId").toString(cryptoJs.enc.Utf8);
         return JSON.parse(decrypt);
+        }
     }
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
 
+        if(postId)
+        {
         const encrypt = postId;
-        const decrypt = await cryptoJs.AES.decrypt(encrypt , "postId").toString(cryptoJs.enc.Utf8);
+        const decrypt =  cryptoJs.AES.decrypt(encrypt , "postId").toString(cryptoJs.enc.Utf8);
         const pId =  JSON.parse(decrypt);
+        }
 
         if(comment.length >  200)
         {

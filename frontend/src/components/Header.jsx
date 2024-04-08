@@ -78,7 +78,7 @@ console.log(searchTerm);
         <Button className='w-12 h-10 lg:hidden' color="gray" onClick={()=>{(searchBar === "hidden") ? setSearchBar("block") : setSearchBar("hidden")}}>
             <FiSearch></FiSearch>
         </Button>
-        <div className='flex gap-2 md:order-2 mr-0 xl:mr-24'>
+        <div className='flex gap-2 md:order-2 mr-0 xl:mr-20'>
             <Button className='w-12 h-10 sm:inline enabled:hover:bg-gray-100 focus:ring-0 bg-gray-50 dark:enabled:hover:bg-transparent dark:focus:ring-0 dark:bg-gray-700 dark:text-white ' color="gray" onClick={()=>{dispatcher(toggleTheme())}}>
                 {(localStorage.getItem("theme") === "light") ? <FaMoon></FaMoon> : <FaSun></FaSun>}
             </Button>
@@ -109,7 +109,7 @@ console.log(searchTerm);
                     </Dropdown>
                 </>) : (
                 <>
-                <Link to="/sign-in" className='mr-0 xl:mr-24'>
+                <Link to="/sign-in" className='mr-0 xl:mr-2'>
                     <Button gradientDuoTone="purpleToBlue">
                         Sign In
                     </Button>

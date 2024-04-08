@@ -1,5 +1,5 @@
 const User = require("../model/user.model");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { error, errorHandler } = require("../utils/errorHandler");
 const createToken = require("../config/jwtToken");
 const jwt = require("jsonwebtoken");

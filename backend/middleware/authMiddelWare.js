@@ -14,7 +14,6 @@ const authMiddleware = async(req , res , next)=>{
         {
             return res.status(404).json({msg : "Unauthorize User"});
         }
-        console.log(user.id);
         req.id = user.id;
     });
     next();
